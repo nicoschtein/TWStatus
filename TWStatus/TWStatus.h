@@ -14,6 +14,7 @@
 
 + (void)showLoadingWithStatus:(NSString *)status;
 + (void)showStatus:(NSString *)status;
++ (void)showStatusWithCheck:(NSString *)status;
 + (void)dismiss;
 + (void)dismissAfter:(NSTimeInterval)interval;
 

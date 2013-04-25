@@ -12,6 +12,7 @@
     UIWindow *_statusWindow;
     UIView *_backgroundView;
     UILabel *_statusLabel;
+    UILabel *_checkLabel;
     
     UIActivityIndicatorView *_activityIndicator;
 }
@@ -45,12 +46,22 @@
     _statusLabel.textAlignment = NSTextAlignmentCenter;
     _statusLabel.numberOfLines = 1;
     
+    _checkLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    _checkLabel.text = @"\u2714";
+    _checkLabel.backgroundColor = [UIColor clearColor];
+    _checkLabel.textColor = [UIColor colorWithRed:191.0/255.0 green:191.0/255.0 blue:191.0/255.0 alpha:1.0];
+    _checkLabel.font = [UIFont fontWithName:@"Arial Unicode MS" size:13.0];
+    _checkLabel.textAlignment = NSTextAlignmentCenter;
+    _checkLabel.numberOfLines = 1;
+    _checkLabel.hidden = YES;
+    
     _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhite)];
     _activityIndicator.transform = CGAffineTransformMakeScale(0.6, 0.6);
     _activityIndicator.frame = CGRectMake(0, 0, 20, 20);
     _activityIndicator.hidesWhenStopped = YES;
     
     [_backgroundView addSubview:_statusLabel];
+    [_backgroundView addSubview:_checkLabel];
     [_backgroundView addSubview:_activityIndicator];
     
     [_statusWindow addSubview:_backgroundView];
@@ -72,7 +83,11 @@
 }
 
 + (void)showStatus:(NSString *)status{
-    [[TWStatus sharedTWStatus] showStatus:status];
+    [[TWStatus sharedTWStatus] showStatus:status withCheck:NO];
+}
+
++ (void)showStatusWithCheck:(NSString *)status{
+    [[TWStatus sharedTWStatus] showStatus:status withCheck:YES];
 }
 
 + (void)dismiss{
@@ -84,7 +99,6 @@
 }
 
 #pragma mark - private
-
 - (void)showLoadingWithStatus:(NSString *)status{
     
     if (_statusWindow.hidden) {
@@ -119,15 +133,17 @@
     }
 }
 
-- (void)showStatus:(NSString *)status{
+- (void)showStatus:(NSString *)status withCheck:(BOOL)check{
     
-    [_activityIndicator stopAnimating];
+    _checkLabel.hidden = !check;
 
+    [_activityIndicator stopAnimating];
+    
     if (_statusWindow.hidden) {
         
         [self setStatus:status];
         _statusWindow.hidden = NO;
-
+        
         [UIView animateWithDuration:0.2 animations:^{
             
             _statusWindow.alpha = 1.0;
@@ -156,11 +172,13 @@
             [UIView animateWithDuration:0.1 animations:^{
                 
                 _backgroundView.alpha = 1.0;
-            
+                
             }];
         }];
     }
+
 }
+
 
 - (void)dismiss{
     
@@ -205,8 +223,8 @@
  
     CGRect statusLabelFrame = _statusLabel.frame;
     statusLabelFrame.size.width = size.width;
-
-    if (_activityIndicator.isAnimating) {
+    
+    if (_activityIndicator.isAnimating || !_checkLabel.isHidden) {
         statusLabelFrame.origin.x += 10;
     }
     _statusLabel.frame = statusLabelFrame;
@@ -215,7 +233,11 @@
     CGRect activityFrame = _activityIndicator.frame;
     activityFrame.origin.x = CGRectGetMinX(_statusLabel.frame) - 20;
     _activityIndicator.frame = activityFrame;
-    
+
+    CGRect checkFrame = _checkLabel.frame;
+    checkFrame.origin.x = CGRectGetMinX(_statusLabel.frame) - 20;
+    _checkLabel.frame = checkFrame;
+
 }
 
 @end
