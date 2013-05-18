@@ -100,7 +100,7 @@
 
 #pragma mark - private
 - (void)showLoadingWithStatus:(NSString *)status{
-    
+    _checkLabel.hidden = YES;
     if (_statusWindow.hidden) {
         
         [self setStatus:status];
