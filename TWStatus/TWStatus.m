@@ -78,6 +78,24 @@
     return _sharedTWStatus;
 }
 
++ (void)showLoadingWithStatus:(NSString *)status dismissAfter:(NSTimeInterval)interval {
+    [[TWStatus sharedTWStatus] showLoadingWithStatus:status];
+    [self dismissAfter:interval];
+}
+
++ (void)showStatus:(NSString *)status dismissAfter:(NSTimeInterval)interval {
+    [[TWStatus sharedTWStatus] showStatus:status withCheck:NO];
+    [self dismissAfter:interval];
+
+}
+
++ (void)showStatusWithCheck:(NSString *)status dismissAfter:(NSTimeInterval)interval {
+    [[TWStatus sharedTWStatus] showStatus:status withCheck:YES];
+    [self dismissAfter:interval];
+
+}
+
+
 + (void)showLoadingWithStatus:(NSString *)status{
     [[TWStatus sharedTWStatus] showLoadingWithStatus:status];
 }

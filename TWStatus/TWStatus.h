@@ -18,4 +18,8 @@
 + (void)dismiss;
 + (void)dismissAfter:(NSTimeInterval)interval;
 
++ (void)showLoadingWithStatus:(NSString *)status dismissAfter:(NSTimeInterval)interval;
++ (void)showStatus:(NSString *)status dismissAfter:(NSTimeInterval)interval;
++ (void)showStatusWithCheck:(NSString *)status dismissAfter:(NSTimeInterval)interval;
+
 @end
