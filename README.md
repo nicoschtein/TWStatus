@@ -11,10 +11,13 @@ Status with ``` UIActivityIndicator ```
 
 Plain status
 
+<p align="center">TODO: add pic...</p>
+Status with a checkmark
+
 ##Installation
 Copy contents of the 'TWStatus' folder to your project
 
-##Usage
+##Usage (Original and new added by @nicoschtein)
 
 ```objc
 //Show status with activity indicator
@@ -29,7 +32,24 @@ Copy contents of the 'TWStatus' folder to your project
 //Dismiss current status after time interval
 + (void)dismissAfter:(NSTimeInterval)interval;
 
+//////////  Added by @nicoschtein  /////////////
+//Show status with a Checkmark (symbol ✔ or ✓) 
++ (void)showStatusWithCheck:(NSString *)status;
+
+// No need to call a diferent method just to dismiss every time, so here you have it all in one handy message:
+
+//Show status with activity indicator and dismiss after interval
++ (void)showLoadingWithStatus:(NSString *)status dismissAfter:(NSTimeInterval)interval;
+
+//Show plain status and dismiss after interval
++ (void)showStatus:(NSString *)status dismissAfter:(NSTimeInterval)interval;
+
+//Show status with a Checkmark (symbol ✔ or ✓) and dismiss after interval
++ (void)showStatusWithCheck:(NSString *)status dismissAfter:(NSTimeInterval)interval;
+
 ```
+
+
 
 ##Requirements
 - iOS >= 5.0
